@@ -1,4 +1,5 @@
 import sys
+import subprocess
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QAction, qApp, QLabel, QPushButton, QHBoxLayout, QVBoxLayout
 
 
@@ -26,13 +27,21 @@ class OtherPartsOfOurApp(QWidget):
         self.setLayout(hbox_1)
 
 
+class RegistrationWindow(QWidget):
+    def __init__(self):
+        super(RegistrationWindow, self).__init__()
+        test_label = QLabel("Hello", self)
+
+
 class ModalWindow(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self):
         super(ModalWindow, self).__init__()
         agitation_label = QLabel("Уважаемый пользователь! Рекомендуем авторизоваться или зарегистрироваться, "
                                  "чтобы использовать все возможности приложения...", self)
         auth_button = QPushButton("Авторизоваться", self)
+        auth_button.clicked.connect(self.open_auth_form)
         reg_button = QPushButton("Зарегистрироваться", self)
+        reg_button.clicked.connect(self.open_reg_form)
         quit_button = QPushButton("Понятно", self)
         quit_button.clicked.connect(self.close_modal_window)
         vbox_1 = QVBoxLayout()
@@ -50,6 +59,17 @@ class ModalWindow(QWidget):
     def close_modal_window():
         modal_window.close()
 
+    @staticmethod
+    def open_reg_form():
+        registration_window = RegistrationWindow()
+        registration_window.show()
+
+    @staticmethod
+    def open_auth_form():
+        core_of_auth_form = "E:/Programming/My_course_working/other/core_auth.py"
+        process = subprocess.Popen(core_of_auth_form, stdout=subprocess.PIPE, shell=True)
+        text, _ = process.communicate()
+        print(text, _)
 
 if __name__ == "__main__":
     application = QApplication(sys.argv)
