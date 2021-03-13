@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QAction, qApp, Q
 from PyQt5.QtGui import QPalette, QColor, QFont
 from PyQt5.QtCore import Qt
 
-# QTabWidget
+# QTabWidget hhh
 
 
 class MainPartOfOurApp(QMainWindow):
