@@ -20,6 +20,7 @@ class OtherPartsOfAuthCore(QWidget):
         self.text_pass_from_user = QTextEdit()
         button_confirm = QPushButton("Авторизоваться", self)
         button_confirm.clicked.connect(self.check_auth)
+        button_cancel = QPushButton("Отмена", self)
         vbox_1 = QVBoxLayout()
         vbox_1.addWidget(label_main)
         hbox_1 = QHBoxLayout()
@@ -32,6 +33,7 @@ class OtherPartsOfAuthCore(QWidget):
         vbox_1.addLayout(hbox_2)
         hbox_3 = QHBoxLayout()
         hbox_3.addWidget(button_confirm)
+        hbox_3.addWidget(button_cancel)
         vbox_1.addLayout(hbox_3)
         self.setLayout(vbox_1)
 
