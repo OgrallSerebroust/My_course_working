@@ -1,6 +1,8 @@
 import sys
 import subprocess
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QAction, qApp, QLabel, QPushButton, QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QAction, qApp, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QScrollArea
+
+# QTabWidget
 
 
 class MainPartOfOurApp(QMainWindow):
@@ -11,17 +13,17 @@ class MainPartOfOurApp(QMainWindow):
         close_action = QAction("Exit", self)
         file_menu.addAction(close_action)
         close_action.triggered.connect(qApp.exit)
-        self.main_part_of_qrs_making_module = OtherPartsOfOurApp(parent=self)
-        self.setCentralWidget(self.main_part_of_qrs_making_module)
+        self.main_part_of_our_app = OtherPartsOfOurApp(parent=self)
+        self.setCentralWidget(self.main_part_of_our_app)
+        self.showFullScreen()
 
 
 class OtherPartsOfOurApp(QWidget):
     def __init__(self, parent=None):
         super(OtherPartsOfOurApp, self).__init__(parent)
-        test_button = QPushButton("Test", self)
-        # test_button.clicked.connect(self.show_reg_popup)
+        test_label = QLabel("test", self)
         vbox_1 = QVBoxLayout()
-        vbox_1.addWidget(test_button)
+        vbox_1.addWidget(test_label)
         hbox_1 = QHBoxLayout()
         hbox_1.addLayout(vbox_1)
         self.setLayout(hbox_1)
@@ -69,7 +71,9 @@ class ModalWindow(QWidget):
         core_of_auth_form = "E:/Programming/My_course_working/other/core_auth.py"
         process = subprocess.Popen(core_of_auth_form, stdout=subprocess.PIPE, shell=True)
         text, _ = process.communicate()
-        print(text, _)
+        id_code_of_user = str(text)[2:-5]
+        print(id_code_of_user)
+
 
 if __name__ == "__main__":
     application = QApplication(sys.argv)
