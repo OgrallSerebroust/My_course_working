@@ -1,6 +1,7 @@
 import sys
 import subprocess
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QAction, qApp, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QScrollArea
+import pyqtgraph.opengl as gl
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QAction, qApp, QLabel, QPushButton, QHBoxLayout, QVBoxLayout
 
 # QTabWidget
 
@@ -10,20 +11,45 @@ class MainPartOfOurApp(QMainWindow):
         super(MainPartOfOurApp, self).__init__(parent)
         menubar = self.menuBar()
         file_menu = menubar.addMenu("Файл")
-        close_action = QAction("Exit", self)
+        close_action = QAction("Выход", self)
         file_menu.addAction(close_action)
         close_action.triggered.connect(qApp.exit)
+        architect_menu = menubar.addMenu("Архитектура")
+        make_new_arch = QAction("Создать новую", self)
+        architect_menu.addAction(make_new_arch)
+        # make_new_arch.triggered.connect()
+        test_visual_menu = menubar.addMenu("123")
+        visual_menu = QAction("123", self)
+        test_visual_menu.addAction(visual_menu)
+        visual_menu.triggered.connect(self.open_test)
         self.main_part_of_our_app = OtherPartsOfOurApp(parent=self)
         self.setCentralWidget(self.main_part_of_our_app)
         self.showFullScreen()
+
+    def open_test(self):
+        core_of_auth_form = "E:/Programming/My_course_working/other/pyqtgraphhelper.py"
+        process = subprocess.Popen(core_of_auth_form, stdout=subprocess.PIPE, shell=True)
+        text, _ = process.communicate()
 
 
 class OtherPartsOfOurApp(QWidget):
     def __init__(self, parent=None):
         super(OtherPartsOfOurApp, self).__init__(parent)
-        test_label = QLabel("test", self)
+        plot = gl.GLViewWidget()
+        plot.opts['distance'] = 40
+        gx = gl.GLGridItem()
+        gx.rotate(90, 0, 1, 0)
+        gx.translate(-10, 0, 0)
+        plot.addItem(gx)
+        gy = gl.GLGridItem()
+        gy.rotate(90, 1, 0, 0)
+        gy.translate(0, -10, 0)
+        plot.addItem(gy)
+        gz = gl.GLGridItem()
+        gz.translate(0, 0, -10)
+        plot.addItem(gz)
         vbox_1 = QVBoxLayout()
-        vbox_1.addWidget(test_label)
+        vbox_1.addWidget(plot)
         hbox_1 = QHBoxLayout()
         hbox_1.addLayout(vbox_1)
         self.setLayout(hbox_1)

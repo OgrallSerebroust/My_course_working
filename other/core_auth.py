@@ -2,9 +2,6 @@ import sys
 import pymysql
 from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QLabel, QTextEdit, QPushButton, QHBoxLayout, QVBoxLayout
 
-temp_name = "Ograll"
-temp_pass = "12345"
-
 
 class MainPartOfAuthCore(QMainWindow):
     def __init__(self, parent=None):
@@ -47,7 +44,8 @@ class OtherPartsOfAuthCore(QWidget):
             cursor.execute("SELECT * FROM users")
             rows = cursor.fetchall()
             for row in rows:
-                if(self.text_name_from_user.toPlainText() == str(row["user_name"])) and (self.text_pass_from_user.toPlainText() == str(row["user_pass"])):
+                if (self.text_name_from_user.toPlainText() == str(row["user_name"])) and (
+                        self.text_pass_from_user.toPlainText() == str(row["user_pass"])):
                     print(row["id_code"])
                     sys.exit()
                 else:
