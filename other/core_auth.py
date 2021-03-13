@@ -21,6 +21,7 @@ class OtherPartsOfAuthCore(QWidget):
         button_confirm = QPushButton("Авторизоваться", self)
         button_confirm.clicked.connect(self.check_auth)
         button_cancel = QPushButton("Отмена", self)
+        # button_cancel.clicked.connect()
         vbox_1 = QVBoxLayout()
         vbox_1.addWidget(label_main)
         hbox_1 = QHBoxLayout()
