@@ -1,19 +1,51 @@
 import sys
-import pymysql
-from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QLabel, QTextEdit, QPushButton, QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QLabel, QTextEdit, QPushButton, QHBoxLayout, QVBoxLayout, qApp
+from PyQt5.QtGui import QPalette, QColor, QFont
+from PyQt5.QtCore import Qt
 import settings_data
 
 
 class MainPartOfAuthCore(QMainWindow):
     def __init__(self, parent=None):
         super(MainPartOfAuthCore, self).__init__(parent)
+        palette = QPalette()
+        palette.setColor(QPalette.Window, QColor("#000000"))
         self.main_part_of_auth_core = OtherPartsOfAuthCore(parent=self)
         self.setCentralWidget(self.main_part_of_auth_core)
+        self.setPalette(palette)
+        self.setFont(QFont("Times", 10, QFont.Bold))
+        self.setWindowFlags(Qt.FramelessWindowHint)
 
 
 class OtherPartsOfAuthCore(QWidget):
     def __init__(self, parent=None):
         super(OtherPartsOfAuthCore, self).__init__(parent)
+        stylesheet = """
+        .QLabel
+        {
+            font-size: 14pt;
+            color: #A5A9B8;
+        }
+
+        .QPushButton
+        {
+            font-size: 12pt;
+            background: rgba(0, 41, 187, 0.73);
+            color: #A5A9B8;
+        }
+
+        .QPushButton:hover
+        {
+            background: rgba(0, 23, 107, 0.42);
+            border: 1px solid #0029BB;
+        }
+        
+        .QPushButton:focus
+        {
+            background: rgba(0, 23, 107, 0.42);
+            border: 1px solid #0029BB;
+        }
+        """
         label_main = QLabel("Авторизация", self)
         label_name = QLabel("Введите имя: ", self)
         self.text_name_from_user = QTextEdit()
@@ -22,7 +54,7 @@ class OtherPartsOfAuthCore(QWidget):
         button_confirm = QPushButton("Авторизоваться", self)
         button_confirm.clicked.connect(self.check_auth)
         button_cancel = QPushButton("Отмена", self)
-        # button_cancel.clicked.connect()
+        button_cancel.clicked.connect(qApp.exit)
         vbox_1 = QVBoxLayout()
         vbox_1.addWidget(label_main)
         hbox_1 = QHBoxLayout()
@@ -38,6 +70,7 @@ class OtherPartsOfAuthCore(QWidget):
         hbox_3.addWidget(button_cancel)
         vbox_1.addLayout(hbox_3)
         self.setLayout(vbox_1)
+        self.setStyleSheet(stylesheet)
 
     def check_auth(self):
         with settings_data.connection:
