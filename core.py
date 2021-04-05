@@ -4,6 +4,7 @@ import pyqtgraph.opengl as gl
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QAction, qApp, QLabel, QPushButton, QHBoxLayout, QVBoxLayout
 from PyQt5.QtGui import QPalette, QColor, QFont
 from PyQt5.QtCore import Qt
+from os import path
 
 # QTabWidget
 
@@ -143,7 +144,8 @@ class ModalWindow(QWidget):
 
     @staticmethod
     def open_auth_form():
-        core_of_auth_form = "E:/Programming/My_course_working/other/core_auth.py"
+        path_to_application = path.abspath("core.py")
+        core_of_auth_form = str(path_to_application[:-7]) + "other\\core_auth.py"
         process = subprocess.Popen(core_of_auth_form, stdout=subprocess.PIPE, shell=True)
         text, _ = process.communicate()
         id_code_of_user = str(text)[2:-5]

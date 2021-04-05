@@ -1,6 +1,7 @@
 import sys
 import pymysql
 from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QLabel, QTextEdit, QPushButton, QHBoxLayout, QVBoxLayout
+import settings_data
 
 
 class MainPartOfAuthCore(QMainWindow):
@@ -39,11 +40,8 @@ class OtherPartsOfAuthCore(QWidget):
         self.setLayout(vbox_1)
 
     def check_auth(self):
-        connection = pymysql.connect(host="45.13.252.154", user="u799736401_Ograll_uniwers", password="_0MechTa8_",
-                                     database="u799736401_for_projects", charset="utf8",
-                                     cursorclass=pymysql.cursors.DictCursor)
-        with connection:
-            cursor = connection.cursor()
+        with settings_data.connection:
+            cursor = settings_data.connection.cursor()
             cursor.execute("SELECT * FROM users")
             rows = cursor.fetchall()
             for row in rows:
