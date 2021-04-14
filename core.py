@@ -146,7 +146,7 @@ class ModalWindow(QWidget):
     def open_auth_form():
         path_to_application = path.abspath("core.py")
         core_of_auth_form = str(path_to_application[:-7]) + "other\\core_auth.py"
-        process = subprocess.Popen(core_of_auth_form, stdout=subprocess.PIPE, shell=True)
+        process = subprocess.Popen(core_of_auth_form, stdout=subprocess.PIPE, shell=True, creationflags=subprocess.ABOVE_NORMAL_PRIORITY_CLASS)
         text, _ = process.communicate()
         id_code_of_user = str(text)[2:-5]
         print(id_code_of_user)
