@@ -45,8 +45,21 @@ class OtherPartsOfAuthCore(QWidget):
             background: rgba(0, 23, 107, 0.42);
             border: 1px solid #0029BB;
         }
+        
+        .QTextEdit
+        {
+            background: rgba(0, 23, 107, 0.42);
+            color: #A5A9B8;
+            border: 2px solid #0029BB;
+            font-size: 14pt;
+            max-height: 50px;
+        }
         """
         label_main = QLabel("Авторизация", self)
+        label_main.setAlignment(Qt.AlignCenter)
+        label_main.setStyleSheet("""
+            border: 1px solid #0029BB;
+        """)
         label_name = QLabel("Введите имя: ", self)
         self.text_name_from_user = QTextEdit()
         label_pass = QLabel("Введите пароль: ", self)
