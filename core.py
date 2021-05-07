@@ -2,7 +2,7 @@ import sys
 import subprocess
 import pyqtgraph.opengl as gl
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QAction, qApp, QLabel, QPushButton, QHBoxLayout, QVBoxLayout
-from PyQt5.QtGui import QPalette, QColor, QFont
+from PyQt5.QtGui import QPalette, QColor, QFont, QIcon
 from PyQt5.QtCore import Qt
 from os import path
 
@@ -41,6 +41,7 @@ class MainPartOfOurApp(QMainWindow):
         self.showFullScreen()
         self.setPalette(palette)
         self.setFont(QFont("Times", 10, QFont.Bold))
+        # self.setWindowIcon(QIcon("source/img/icon.jpg"))
 
     def open_test(self):
         core_of_auth_form = "E:/Programming/My_course_working/other/pyqtgraphhelper.py"
@@ -69,12 +70,6 @@ class OtherPartsOfOurApp(QWidget):
         hbox_1 = QHBoxLayout()
         hbox_1.addLayout(vbox_1)
         self.setLayout(hbox_1)
-
-
-class RegistrationWindow(QWidget):
-    def __init__(self):
-        super(RegistrationWindow, self).__init__()
-        test_label = QLabel("Hello", self)
 
 
 class ModalWindow(QWidget):
@@ -139,16 +134,24 @@ class ModalWindow(QWidget):
 
     @staticmethod
     def open_reg_form():
-        registration_window = RegistrationWindow()
-        registration_window.show()
+        path_to_application = path.abspath("core.py")
+        core_of_reg_form = str(path_to_application[:-7]) + "other\\core_reg.py"
+        process = subprocess.Popen(core_of_reg_form, stdout=subprocess.PIPE, shell=True,
+                                   creationflags=subprocess.ABOVE_NORMAL_PRIORITY_CLASS)
+        text, _ = process.communicate()
 
     @staticmethod
     def open_auth_form():
         path_to_application = path.abspath("core.py")
         core_of_auth_form = str(path_to_application[:-7]) + "other\\core_auth.py"
-        process = subprocess.Popen(core_of_auth_form, stdout=subprocess.PIPE, shell=True, creationflags=subprocess.ABOVE_NORMAL_PRIORITY_CLASS)
+        process = subprocess.Popen(core_of_auth_form, stdout=subprocess.PIPE, shell=True,
+                                   creationflags=subprocess.ABOVE_NORMAL_PRIORITY_CLASS)
         text, _ = process.communicate()
         id_code_of_user = str(text)[2:-5]
+        if id_code_of_user != 0:
+            ModalWindow.close_modal_window()
+        else:
+            ModalWindow.close_modal_window()  # Не верно!!!
         print(id_code_of_user)
 
 
